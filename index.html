@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pavan Adithya K — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="star-field"></canvas>
+<div id="nebula"></div>
+
+<div id="solar-system">
+
+<div class="orbit-path" style="--r:110px"></div>
+<div class="orbit-path" style="--r:180px"></div>
+<div class="orbit-path" style="--r:260px"></div>
+<div class="orbit-path" style="--r:360px"></div>
+<div class="orbit-path" style="--r:450px"></div>
+<div class="orbit-path" style="--r:540px"></div>
+
+<div class="orbit" data-planet="0" style="--r:110px;--d:8s;--color:#1e6eb5;--size:38px;--glow:rgba(30,110,181,0.6);--faint:rgba(30,110,181,0.15)">
+  <div class="planet">
+    <div class="planet-body">
+      <div class="moon-orbit"><div class="moon-dot" style="--color:#1e6eb5"></div></div>
+    </div>
+    <span class="planet-label"><span class="planet-label-text">OceanForecast</span></span>
+  </div>
+</div>
+
+<div class="orbit" data-planet="1" style="--r:180px;--d:13s;--color:#7c3aed;--size:32px;--glow:rgba(124,58,237,0.5);--faint:rgba(124,58,237,0.12)">
+  <div class="planet">
+    <div class="planet-body">
+      <div class="planet-ring"></div>
+    </div>
+    <span class="planet-label"><span class="planet-label-text">Doc-Analyser</span></span>
+  </div>
+</div>
+
+<div class="orbit" data-planet="2" style="--r:260px;--d:19s;--color:#22c55e;--size:28px;--glow:rgba(34,197,94,0.5);--faint:rgba(34,197,94,0.12)">
+  <div class="planet">
+    <div class="planet-body">
+      <div class="moon-orbit"><div class="moon-dot" style="--color:#22c55e"></div></div>
+    </div>
+    <span class="planet-label"><span class="planet-label-text">devlog-ai</span></span>
+  </div>
+</div>
+
+<div class="orbit" data-planet="3" style="--r:360px;--d:27s;--color:#f97316;--size:24px;--glow:rgba(249,115,22,0.5);--faint:rgba(249,115,22,0.12)">
+  <div class="planet">
+    <div class="planet-body"></div>
+    <span class="planet-label"><span class="planet-label-text">Agent Rocky</span></span>
+  </div>
+</div>
+
+<div class="orbit" data-planet="4" style="--r:450px;--d:38s;--color:#ec4899;--size:20px;--glow:rgba(236,72,153,0.5);--faint:rgba(236,72,153,0.1)">
+  <div class="planet">
+    <div class="planet-body"></div>
+    <span class="planet-label"><span class="planet-label-text">Mirror-Mind</span></span>
+  </div>
+</div>
+
+<div class="orbit" data-planet="5" style="--r:540px;--d:52s;--color:#06b6d4;--size:16px;--glow:rgba(6,182,212,0.5);--faint:rgba(6,182,212,0.1)">
+  <div class="planet">
+    <div class="planet-body"></div>
+    <span class="planet-label"><span class="planet-label-text">AtomQuest</span></span>
+  </div>
+</div>
+
+<div id="sun">
+  <div id="sun-tooltip">
+    <strong>Pavan Adithya K</strong>
+    <div class="role">AI/ML Engineer &amp; Builder</div>
+    <a href="https://github.com/pavanadithyak" target="_blank">github.com/pavanadithyak</a>
+    <a href="https://github.com/paq67" target="_blank">github.com/paq67</a>
+  </div>
+</div>
+
+<div id="asteroid-belt"></div>
+
+</div>
+
+<div id="about-card" class="fixed-ui">
+  <div class="name">Pavan Adithya K</div>
+  <div class="bio">ECE undergrad. I build AI agents, full-stack systems, and developer tools that solve real problems.</div>
+  <div class="links">
+    <a href="https://github.com/pavanadithyak" target="_blank">github.com/pavanadithyak</a>
+    <a href="https://github.com/paq67" target="_blank">github.com/paq67</a>
+    <a href="mailto:pavanadithyawork@gmail.com">pavanadithyawork@gmail.com</a>
+  </div>
+  <div class="note">paq67 is my older GitHub account &mdash; all work is mine.</div>
+</div>
+
+<button id="safe-mode-toggle" class="fixed-ui">&boxplus; List view</button>
+
+<div id="project-overlay">
+  <div id="project-card">
+    <button id="card-close">&times;</button>
+    <div id="card-status"></div>
+    <div id="card-title"></div>
+    <div id="card-tags"></div>
+    <div id="card-desc"></div>
+    <div id="card-links"></div>
+  </div>
+</div>
+
+<div id="list-view">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px">
+    <div>
+      <div class="list-view-header">Pavan Adithya K</div>
+      <div class="list-view-sub">AI/ML Engineer &amp; Builder</div>
+    </div>
+    <button id="list-view-close">&times; Solar</button>
+  </div>
+
+  <div class="list-project">
+    <h3>OceanDisaster Forecast <span style="font-size:10px;color:#4ade80;font-family:'JetBrains Mono',monospace;background:rgba(34,197,94,.12);padding:1px 6px;border-radius:3px;vertical-align:middle">LIVE</span></h3>
+    <div class="list-tags">
+      <span>PyTorch</span><span>Bayesian LSTM</span><span>ARIMA</span><span>Streamlit</span><span>ML</span><span>Live</span>
+    </div>
+    <p>Real-time ocean disaster forecasting dashboard. Fetches live marine data from the Open-Meteo Marine API &rarr; dual ML pipeline: Bayesian LSTM with Monte Carlo Dropout for uncertainty quantification + ARIMA baseline &rarr; multi-parameter risk assessment engine with configurable thresholds &rarr; interactive Plotly visualizations. Built for maritime professionals and coastal disaster response.</p>
+    <div class="list-links">
+      <a href="https://huggingface.co/spaces/paq1/oceanforecast" target="_blank">&rarr; Live Demo (HF Spaces)</a>
+      <a href="https://github.com/pavanadithyak/Oceandisaster-forecast" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <div class="list-project">
+    <h3>Doc-Analyser <span style="font-size:10px;color:#4ade80;font-family:'JetBrains Mono',monospace;background:rgba(34,197,94,.12);padding:1px 6px;border-radius:3px;vertical-align:middle">LIVE</span></h3>
+    <div class="list-tags">
+      <span>FastAPI</span><span>Groq</span><span>Gemini</span><span>Claude</span><span>Docker</span><span>NER</span>
+    </div>
+    <p>Upload any PDF, DOCX, or image &rarr; multi-model LLM pipeline (Groq / Gemini / Claude) &rarr; NER, classification, confidence-scored summaries &rarr; structured JSON output. Automatic retry logic when model returns malformed responses. Dockerized. Built in 24 hours for a hackathon.</p>
+    <div class="list-links">
+      <a href="https://huggingface.co/spaces/paq1/doc-analyzer" target="_blank">&rarr; Live Demo (HF Spaces)</a>
+      <a href="https://github.com/pavanadithyak/Doc-analyser" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <div class="list-project">
+    <h3>devlog-ai <span style="font-size:10px;color:#4ade80;font-family:'JetBrains Mono',monospace;background:rgba(34,197,94,.12);padding:1px 6px;border-radius:3px;vertical-align:middle">LIVE</span></h3>
+    <div class="list-tags">
+      <span>Gemini</span><span>Streaming</span><span>Vanilla JS</span><span>Live</span>
+    </div>
+    <p>Paste a git diff, commit log, or error trace &rarr; streaming Gemini API generates changelogs, PR descriptions, standup updates, or postmortems instantly. Zero backend. Fully client-side. Built in one sprint.</p>
+    <div class="list-links">
+      <a href="https://pavanadithyak.github.io/devlog-ai" target="_blank">&rarr; Live Demo</a>
+      <a href="https://github.com/pavanadithyak/devlog-ai" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <div class="list-project">
+    <h3>Agent Rocky</h3>
+    <div class="list-tags">
+      <span>Electron</span><span>Groq</span><span>Multi-model</span><span>Desktop Agent</span>
+    </div>
+    <p>Pixel-art AI companion that lives on your desktop. Walks across your taskbar, opens a retro terminal chat window, jazz-dances when the AI responds. Multi-model support (Groq, Zen). Rate-limit aware. Built in one sprint to explore what ambient AI feels like when it&rsquo;s not confined to a browser tab.</p>
+    <div class="list-links">
+      <span style="font-size:12px;color:#666;font-family:'JetBrains Mono',monospace">Desktop app &mdash; no hosted URL</span>
+      <a href="https://github.com/paq67/agent-rocky" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <div class="list-project">
+    <h3>Mirror-Mind</h3>
+    <div class="list-tags">
+      <span>TypeScript</span><span>Node</span><span>AI</span><span>Full-stack</span>
+    </div>
+    <p>AI-powered mind mirror app. Reflects your thoughts back with structured insight and pattern recognition. TypeScript full-stack with modular architecture.</p>
+    <div class="list-links">
+      <a href="https://github.com/paq67/Mirror-Mind" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <div class="list-project">
+    <h3>AtomQuest Portal</h3>
+    <div class="list-tags">
+      <span>React</span><span>Node</span><span>PostgreSQL</span><span>JWT</span><span>Docker</span>
+    </div>
+    <p>Production-grade employee goal-tracking portal. JWT auth, 3-tier RBAC (employee / manager / admin), goal approval workflow, quarterly achievements, audit logs, CSV/JSON export. 24 passing backend tests. Full docker-compose.</p>
+    <div class="list-links">
+      <a href="https://github.com/pavanadithyak/atomquest-portal" target="_blank">GitHub</a>
+    </div>
+  </div>
+</div>
+
+<section id="skills-section">
+  <h2>✦ SKILLS</h2>
+  <div class="skills-grid">
+    <div class="skill-category">
+      <h3>AI/ML</h3>
+      <div class="skill-pills">
+        <span class="skill-pill">Python</span><span class="skill-pill">PyTorch</span><span class="skill-pill">Groq</span>
+        <span class="skill-pill">Gemini</span><span class="skill-pill">Claude API</span><span class="skill-pill">FastAPI</span>
+        <span class="skill-pill">scikit-learn</span><span class="skill-pill">Bayesian ML</span><span class="skill-pill">LSTM</span><span class="skill-pill">ARIMA</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <h3>Backend</h3>
+      <div class="skill-pills">
+        <span class="skill-pill">Node.js</span><span class="skill-pill">Express</span><span class="skill-pill">PostgreSQL</span>
+        <span class="skill-pill">REST API</span><span class="skill-pill">Docker</span><span class="skill-pill">JWT</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <h3>Frontend</h3>
+      <div class="skill-pills">
+        <span class="skill-pill">React</span><span class="skill-pill">JS</span><span class="skill-pill">TypeScript</span>
+        <span class="skill-pill">Tailwind</span><span class="skill-pill">Streamlit</span><span class="skill-pill">Plotly</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <h3>Tools</h3>
+      <div class="skill-pills">
+        <span class="skill-pill">Git</span><span class="skill-pill">Electron</span><span class="skill-pill">Docker Compose</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by <strong style="color:#888">Pavan Adithya K</strong><br>
+  <a href="https://github.com/pavanadithyak" target="_blank">github.com/pavanadithyak</a> |
+  <a href="https://github.com/paq67" target="_blank">github.com/paq67</a> |
+  <a href="mailto:pavanadithyawork@gmail.com">pavanadithyawork@gmail.com</a>
+  <div class="note">paq67 is my older GitHub account &mdash; all work is mine.</div>
+  <div class="view-source">Last updated: May 2026 &middot; This portfolio is a single HTML file.</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#000008;color:#e0e0e0;font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+
+#star-field{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0}
+#nebula{position:fixed;top:50%;left:50%;width:800px;height:800px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,180,60,0.07) 0%,rgba(255,120,30,0.03) 35%,transparent 65%);pointer-events:none;z-index:1}
+
+#solar-system{position:relative;height:100vh;overflow:hidden;z-index:2;transition:opacity .5s}
+#solar-system.dimmed{opacity:.2}
+
+.orbit-path{position:absolute;top:calc(50% - var(--r));left:calc(50% - var(--r));width:calc(2 * var(--r));height:calc(2 * var(--r));border:1px dashed rgba(255,255,255,.08);border-radius:50%;pointer-events:none}
+
+.orbit{position:absolute;top:calc(50% - var(--r));left:calc(50% - var(--r));width:calc(2 * var(--r));height:calc(2 * var(--r));animation:spin var(--d) linear infinite;pointer-events:none}
+.orbit.selected{animation-play-state:paused}
+
+.planet{position:absolute;top:0;left:50%}
+
+.planet-body{position:relative;width:var(--size);height:var(--size);border-radius:50%;background:var(--color);box-shadow:0 0 15px 5px var(--glow),0 0 30px 10px var(--faint);transform:translate(-50%,-50%);transition:box-shadow .3s;cursor:pointer;pointer-events:auto;z-index:20}
+.orbit.selected .planet-body{box-shadow:0 0 20px 8px var(--glow),0 0 40px 16px var(--faint),0 0 60px 30px var(--color)}
+
+.orbit[data-planet="0"] .planet-body{background:radial-gradient(circle at 30% 25%,rgba(180,220,255,0.35) 0%,transparent 50%),radial-gradient(circle at 50% 50%,transparent 35%,rgba(0,0,20,0.4) 75%,#000010),radial-gradient(circle at 40% 30%,rgba(50,130,40,0.6) 0%,transparent 20%),radial-gradient(circle at 65% 50%,rgba(60,120,35,0.5) 0%,transparent 18%),radial-gradient(circle at 25% 65%,rgba(45,100,35,0.45) 0%,transparent 16%),radial-gradient(circle at 55% 75%,rgba(55,110,40,0.55) 0%,transparent 22%),radial-gradient(circle at 75% 25%,rgba(50,110,30,0.4) 0%,transparent 14%),radial-gradient(circle at 80% 70%,rgba(40,90,30,0.35) 0%,transparent 12%),radial-gradient(circle at 50% 50%,#1a80cc,#0d4a7a 45%,#061e3a 80%,#020a14)}
+.orbit[data-planet="1"] .planet-body{background:radial-gradient(circle at 30% 25%,rgba(220,180,255,0.35) 0%,transparent 45%),radial-gradient(circle at 50% 50%,transparent 35%,rgba(0,0,20,0.45) 70%,#020008),repeating-linear-gradient(0deg,#7c3aed 0px,#a78bfa 3px,#6d28d9 6px,#8b5cf6 9px,#5b21b6 12px,#7c3aed 14px,#9b5cf5 16px)}
+.orbit[data-planet="2"] .planet-body{background:radial-gradient(circle at 30% 25%,rgba(150,255,180,0.35) 0%,transparent 50%),radial-gradient(circle at 50% 50%,transparent 35%,rgba(0,20,0,0.4) 75%,#000a00),radial-gradient(circle at 45% 35%,rgba(200,255,220,0.25) 0%,transparent 25%),radial-gradient(circle at 60% 55%,rgba(30,160,60,0.5) 0%,transparent 30%),radial-gradient(circle at 30% 60%,rgba(20,120,40,0.4) 0%,transparent 25%),radial-gradient(circle at 70% 30%,rgba(40,180,70,0.45) 0%,transparent 20%),radial-gradient(circle at 50% 50%,#22c55e,#16a34a 40%,#15803d 70%,#0a3d1a)}
+.orbit[data-planet="3"] .planet-body{background:radial-gradient(circle at 30% 25%,rgba(255,200,150,0.35) 0%,transparent 45%),radial-gradient(circle at 50% 50%,transparent 35%,rgba(20,10,0,0.4) 75%,#080400),radial-gradient(circle at 40% 35%,rgba(200,100,40,0.5) 0%,transparent 15%),radial-gradient(circle at 65% 55%,rgba(180,80,30,0.4) 0%,transparent 12%),radial-gradient(circle at 50% 70%,rgba(200,120,50,0.35) 0%,transparent 10%),radial-gradient(circle at 25% 50%,rgba(160,70,20,0.3) 0%,transparent 8%),radial-gradient(circle at 50% 50%,#f97316,#d95f0e 40%,#b84a0a 70%,#7a2e00)}
+.orbit[data-planet="4"] .planet-body{background:radial-gradient(circle at 30% 25%,rgba(255,200,240,0.45) 0%,transparent 50%),radial-gradient(circle at 50% 50%,transparent 35%,rgba(30,0,20,0.35) 75%,#100010),radial-gradient(circle at 70% 30%,rgba(255,180,220,0.3) 0%,transparent 45%),radial-gradient(circle at 50% 50%,#ec4899,#be2470 45%,#8a1550 75%,#4a0828)}
+.orbit[data-planet="5"] .planet-body{background:radial-gradient(circle at 30% 25%,rgba(150,230,255,0.4) 0%,transparent 45%),radial-gradient(circle at 50% 50%,transparent 30%,rgba(0,10,20,0.45) 75%,#000510),radial-gradient(circle at 50% 50%,#06b6d4,#0891b2 40%,#065f73 75%,#032a33)}
+
+.planet-label{position:absolute;top:calc(-1 * var(--size) - 16px);left:50%;transform:translateX(-50%);opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+.orbit:hover .planet-label{opacity:1}
+.planet-label-text{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:rgba(255,255,255,.85);letter-spacing:.04em;animation:spin var(--d) linear infinite reverse}
+
+.moon-orbit{position:absolute;top:50%;left:50%;width:calc(var(--size) + 24px);height:calc(var(--size) + 24px);margin:calc(-1 * (var(--size) + 24px) / 2);animation:moon-spin 3s linear infinite}
+.moon-dot{position:absolute;top:-3px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--color);box-shadow:0 0 6px 2px var(--color)}
+
+.planet-ring{position:absolute;top:50%;left:50%;width:calc(var(--size) + 20px);height:calc(var(--size) + 20px);margin:calc(-1 * (var(--size) + 20px) / 2);border:2px solid rgba(124,58,237,.25);border-radius:50%;transform:rotateX(65deg);pointer-events:none}
+
+#sun{position:absolute;top:50%;left:50%;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff8e7,#ffd700,#ff8c00);box-shadow:0 0 40px 10px rgba(255,215,0,.5),0 0 80px 30px rgba(255,200,0,.25),0 0 150px 60px rgba(255,150,0,.12);display:flex;align-items:center;justify-content:center;cursor:default;z-index:10;transform:translate(-50%,-50%);animation:sun-pulse 3s ease-in-out infinite}
+
+#sun-tooltip{position:absolute;bottom:calc(100% + 18px);left:50%;transform:translateX(-50%);background:rgba(0,0,15,.92);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:14px 20px;white-space:nowrap;font-family:'DM Sans',sans-serif;font-size:13px;color:#bbb;line-height:1.7;opacity:0;pointer-events:none;transition:opacity .25s;z-index:20;text-align:center}
+#sun:hover #sun-tooltip{opacity:1}
+#sun-tooltip strong{color:#ffd700;font-size:14px}
+#sun-tooltip .role{color:#f0a030;font-size:12px;margin:2px 0 4px}
+#sun-tooltip .tagline{color:#888;font-size:12px;font-style:italic;margin-bottom:6px}
+#sun-tooltip a{color:#6ea8fe;text-decoration:none;display:inline-block;margin:1px 0;font-size:12px}
+#sun-tooltip a:hover{text-decoration:underline}
+
+#asteroid-belt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:asteroid-spin 200s linear infinite;pointer-events:none;z-index:5}
+#asteroid-belt svg{display:block}
+
+.skill-pills{display:flex;flex-wrap:wrap;gap:5px}
+.skill-pill{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.08)}
+
+#about-card{position:fixed;bottom:24px;left:24px;max-width:360px;padding:16px 20px;background:rgba(0,0,15,.85);border:1px solid rgba(255,255,255,.06);border-radius:10px;z-index:15;transition:opacity .4s;backdrop-filter:blur(4px)}
+#about-card.dimmed{opacity:.2}
+#about-card .name{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#ffd700;margin-bottom:2px}
+#about-card .bio{font-size:12px;color:#999;line-height:1.5;margin-bottom:6px}
+#about-card .links{display:flex;flex-wrap:wrap;gap:12px}
+#about-card .links a{font-family:'JetBrains Mono',monospace;font-size:10px;color:#6ea8fe;text-decoration:none;transition:color .2s}
+#about-card .links a:hover{color:#8bbfff}
+#about-card .note{font-size:10px;color:#666;margin-top:4px;font-style:italic}
+
+#safe-mode-toggle{position:fixed;top:20px;right:20px;z-index:15;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:7px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;transition:background .2s,color .2s,opacity .4s;backdrop-filter:blur(4px)}
+#safe-mode-toggle.dimmed{opacity:.2}
+#safe-mode-toggle:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8)}
+
+#project-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,8,.78);z-index:100;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(2px)}
+#project-overlay.active{opacity:1;pointer-events:all}
+
+#project-card{position:fixed;top:50%;right:0;transform:translate(100%,-50%);width:440px;max-width:88vw;max-height:82vh;background:rgba(8,8,28,.97);border:1px solid rgba(255,255,255,.08);border-left:3px solid var(--card-color,#7c3aed);border-radius:12px 0 0 12px;padding:32px 28px;overflow-y:auto;transition:transform .45s cubic-bezier(.22,1,.36,1);z-index:101}
+#project-overlay.active #project-card{transform:translate(0,-50%)}
+#card-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,.3);font-size:24px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:color .2s;line-height:1}
+#card-close:hover{color:#fff}
+#card-title{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:600;color:#fff;margin-bottom:12px;letter-spacing:-.02em}
+#card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+#card-tags span{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:4px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.08)}
+#card-desc{font-size:14px;color:#aaa;line-height:1.7;margin-bottom:20px}
+#card-links{display:flex;flex-wrap:wrap;gap:10px}
+#card-links a{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 16px;border-radius:6px;text-decoration:none;transition:all .2s}
+#card-links .btn-live{background:rgba(30,110,181,.2);color:#4a9eff;border:1px solid rgba(30,110,181,.3)}
+#card-links .btn-live:hover{background:rgba(30,110,181,.35)}
+#card-links .btn-deploying{background:rgba(124,58,237,.12);color:#a78bfa;border:1px solid rgba(124,58,237,.2);cursor:default}
+#card-links .btn-github{background:rgba(255,255,255,.06);color:#ccc;border:1px solid rgba(255,255,255,.1)}
+#card-links .btn-github:hover{background:rgba(255,255,255,.12);color:#fff}
+#card-status{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;display:inline-block;margin-bottom:16px;letter-spacing:.06em}
+.status-live{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.2)}
+.status-deploying{background:rgba(124,58,237,.12);color:#a78bfa;border:1px solid rgba(124,58,237,.15)}
+.status-none{background:rgba(255,255,255,.04);color:#666;border:1px solid rgba(255,255,255,.06)}
+
+#list-view{display:none;padding:40px 24px;max-width:720px;margin:0 auto}
+body.list-mode #list-view{display:block}
+body.list-mode #solar-system,body.list-mode .fixed-ui,body.list-mode #star-field,body.list-mode #nebula{display:none!important}
+
+.list-project{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.06)}
+.list-project:last-child{border-bottom:none;margin-bottom:0}
+.list-project h3{font-family:'JetBrains Mono',monospace;font-size:18px;color:#fff;margin-bottom:6px}
+.list-project .list-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.list-project .list-tags span{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6)}
+.list-project p{font-size:13px;color:#888;line-height:1.6;margin-bottom:12px}
+.list-project .list-links{display:flex;flex-wrap:wrap;gap:10px}
+.list-project .list-links a{font-family:'JetBrains Mono',monospace;font-size:12px;color:#6ea8fe;text-decoration:none;padding:5px 12px;border-radius:4px;border:1px solid rgba(110,168,254,.15);transition:all .2s}
+.list-project .list-links a:hover{background:rgba(110,168,254,.1);border-color:rgba(110,168,254,.3)}
+.list-view-header{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:#ffd700;margin-bottom:4px;letter-spacing:-.02em}
+.list-view-sub{font-size:14px;color:#666;margin-bottom:28px}
+#list-view-close{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 14px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;transition:background .2s,color .2s;flex-shrink:0}
+#list-view-close:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8)}
+
+#skills-section{padding:60px 24px 40px;max-width:800px;margin:0 auto}
+#skills-section h2{font-family:'JetBrains Mono',monospace;font-size:18px;color:#ffd700;margin-bottom:24px;letter-spacing:.1em;text-align:center}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:640px){.skills-grid{grid-template-columns:1fr}}
+.skill-category h3{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.skills-grid .skill-pills{display:flex;flex-wrap:wrap;gap:5px}
+.skills-grid .skill-pill{font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.06);transition:all .2s}
+.skills-grid .skill-pill:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.12)}
+
+footer{text-align:center;padding:40px 24px 50px;font-size:13px;color:#555;line-height:1.8}
+footer a{color:#6ea8fe;text-decoration:none;margin:0 6px}
+footer a:hover{text-decoration:underline}
+footer .note{font-size:11px;color:#444;font-style:italic;margin-top:4px}
+footer .view-source{font-size:11px;color:#444;margin-top:6px}
+footer .view-source a{color:#555;font-size:11px}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes sun-pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.06)}}
+@keyframes moon-spin{to{transform:rotate(360deg)}}
+@keyframes asteroid-spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+@media(max-width:767px){
+  body:not(.list-mode) #list-view{display:block}
+  body:not(.list-mode) #solar-system,body:not(.list-mode) .fixed-ui,body:not(.list-mode) #star-field,body:not(.list-mode) #nebula{display:none!important}
+  #safe-mode-toggle{display:none}
+  #skills-section{padding:40px 16px 30px}
+  footer{padding:30px 16px 40px}
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.12)}
