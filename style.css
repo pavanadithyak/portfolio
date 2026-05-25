@@ -5,7 +5,7 @@ body{background:#000008;color:#e0e0e0;font-family:'DM Sans',sans-serif;min-heigh
 #star-field{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0}
 #nebula{position:fixed;top:50%;left:50%;width:800px;height:800px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,180,60,0.07) 0%,rgba(255,120,30,0.03) 35%,transparent 65%);pointer-events:none;z-index:1}
 
-#solar-system{position:relative;height:100vh;overflow:hidden;z-index:2;transition:opacity .5s}
+#solar-system{position:relative;min-height:100vh;z-index:2;transition:opacity .5s}
 #solar-system.dimmed{opacity:.2}
 
 .orbit-path{position:absolute;top:calc(50% - var(--r));left:calc(50% - var(--r));width:calc(2 * var(--r));height:calc(2 * var(--r));border:1px dashed rgba(255,255,255,.08);border-radius:50%;pointer-events:none}
@@ -104,7 +104,7 @@ body.list-mode #solar-system,body.list-mode .fixed-ui,body.list-mode #star-field
 #list-view-close{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 14px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;transition:background .2s,color .2s;flex-shrink:0}
 #list-view-close:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8)}
 
-#skills-section{padding:60px 24px 40px;max-width:800px;margin:0 auto}
+#skills-section{padding:60px 24px 40px;max-width:800px;margin:80px auto 0}
 #skills-section h2{font-family:'JetBrains Mono',monospace;font-size:18px;color:#ffd700;margin-bottom:24px;letter-spacing:.1em;text-align:center}
 .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media(max-width:640px){.skills-grid{grid-template-columns:1fr}}
