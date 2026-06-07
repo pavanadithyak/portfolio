@@ -31,6 +31,17 @@ var projects = [
    github:"github.com/pavanadithyak/atomquest-portal",status:"none"}
 ];
 
+var STAR_RADII = [85, 145, 220, 310, 405, 495, 585, 650];
+
+var DEFAULT_ACHIEVEMENTS = [
+  {id:"a0",name:"Appizap Runner Up",type:"hackathon",desc:"Runner up at Appizap — multi-model LLM pipeline for document analysis. Built Doc-Analyser in 24 hours.",link:"https://drive.google.com/file/d/1v0sthi_qZ7tl-akKl8W5CQW6GUhOZ2GT/view",date:"2025-11"},
+  {id:"a1",name:"Project Showcase Competition",type:"hackathon",desc:"ECE project showcase — presented OceanDisaster Forecast and secured recognition.",link:"https://drive.google.com/file/d/1wCWu8OBa3QH5Lw7epEZnkTFbQJ9i0xAV/view",date:"2026-01"},
+  {id:"a2",name:"Databricks Certified Generative AI Engineer Associate",type:"certification",desc:"Validates expertise in applying generative AI using Databricks. Covers LLMOps, RAG architecture, model fine-tuning, and production deployment patterns.",link:"https://drive.google.com/file/d/1_pQz9jOHCZNn0NBF6NMFm5XGkyPhRiyi/view",date:"2026-04"},
+  {id:"a3",name:"Databricks Certified Data Engineer Associate",type:"certification",desc:"Validates data engineering skills on the Databricks Lakehouse Platform. Topics include ETL pipelines, Delta Lake optimizations, and data governance.",link:"https://drive.google.com/file/d/1M6tS-2J3rRPmMfQFlmQvyfFO0t4TwmSG/view",date:"2026-05"},
+  {id:"a4",name:"ICISD'26 — Paper Presenter",type:"hackathon",desc:"Presented research paper at the International Conference on Intelligent Systems and Data Science (ICISD 2026).",link:"https://drive.google.com/file/d/1wv4Q8mnKQ1kPE-n4sRsqQ7DbmS5qFcxH/view",date:"2026-03"},
+  {id:"a5",name:"Upagraha Hackathon",type:"hackathon",desc:"Built AtomQuest Portal — employee goal-tracking platform with JWT auth, RBAC, goal approval workflow, and CSV/JSON export.",link:"https://drive.google.com/file/d/1wwWXFHjCMBcdHFSpC0j30cVpMcv6qJ2K/view",date:"2025-12"}
+];
+
 (function(){
   var canvas = document.getElementById('star-field');
   var ctx = canvas.getContext('2d');
@@ -187,6 +198,149 @@ var projects = [
       role.parentNode.insertBefore(tip, role.nextSibling);
     }
     tip.innerHTML = '\u201c' + captions[captionIndex] + '\u201d';
+  });
+
+  /* === ACHIEVEMENT STARS === */
+  var achContainer = document.getElementById('achievement-orbits');
+  var selectedAchOrbit = null;
+  var achDetailOverlay = document.getElementById('achievement-detail-overlay');
+  var achModal = document.getElementById('achievement-modal');
+
+  function loadAchievements(){
+    var data = localStorage.getItem('achievements');
+    if(data){ return JSON.parse(data); }
+    localStorage.setItem('achievements', JSON.stringify(DEFAULT_ACHIEVEMENTS));
+    return DEFAULT_ACHIEVEMENTS;
+  }
+
+  function saveAchievements(achs){
+    localStorage.setItem('achievements', JSON.stringify(achs));
+  }
+
+  function renderAchievementStars(achs){
+    achContainer.innerHTML = '';
+    achs.forEach(function(a, i){
+      var r = STAR_RADII[i % STAR_RADII.length];
+      var path = document.createElement('div');
+      path.className = 'star-orbit-path';
+      path.style.setProperty('--r', r + 'px');
+      achContainer.appendChild(path);
+
+      var orbit = document.createElement('div');
+      orbit.className = 'star-orbit';
+      orbit.dataset.achId = a.id;
+      orbit.style.setProperty('--r', r + 'px');
+      orbit.style.setProperty('--d', (8 + i * 3) + 's');
+
+      var body = document.createElement('div');
+      body.className = 'star-body ' + a.type;
+      body.title = a.name;
+
+      var label = document.createElement('span');
+      label.className = 'star-label';
+      label.textContent = a.name;
+
+      orbit.appendChild(body);
+      orbit.appendChild(label);
+      achContainer.appendChild(orbit);
+    });
+  }
+
+  function showAchDetail(a){
+    var badge = document.getElementById('ach-detail-type-badge');
+    badge.textContent = a.type === 'hackathon' ? '\u2605 HACKATHON' : '\u2713 CERTIFICATION';
+    badge.className = a.type;
+    document.getElementById('ach-detail-name').textContent = a.name;
+    document.getElementById('ach-detail-date').textContent = a.date.replace('-', ' / ');
+    document.getElementById('ach-detail-desc').textContent = a.desc;
+    var link = document.getElementById('ach-detail-link');
+    if(a.link){
+      link.href = a.link;
+      link.style.display = 'inline-flex';
+    } else {
+      link.style.display = 'none';
+    }
+    var delBtn = document.getElementById('ach-detail-delete');
+    delBtn.dataset.achId = a.id;
+    var card = document.getElementById('ach-detail-card');
+    card.style.setProperty('--ach-color', a.type === 'hackathon' ? '#ffd700' : '#c0c0c0');
+    solarSystem.classList.add('dimmed');
+    document.querySelectorAll('.fixed-ui').forEach(function(f){ f.classList.add('dimmed'); });
+    achDetailOverlay.classList.add('active');
+  }
+
+  function hideAchDetail(){
+    achDetailOverlay.classList.remove('active');
+    solarSystem.classList.remove('dimmed');
+    document.querySelectorAll('.fixed-ui').forEach(function(f){ f.classList.remove('dimmed'); });
+    if(selectedAchOrbit){
+      selectedAchOrbit.classList.remove('selected');
+      selectedAchOrbit = null;
+    }
+  }
+
+  var achs = loadAchievements();
+  renderAchievementStars(achs);
+
+  achContainer.addEventListener('click', function(e){
+    var body = e.target.closest('.star-body');
+    if(!body) return;
+    var orbit = body.closest('.star-orbit');
+    if(!orbit) return;
+    if(selectedAchOrbit && selectedAchOrbit !== orbit){
+      selectedAchOrbit.classList.remove('selected');
+    }
+    orbit.classList.add('selected');
+    selectedAchOrbit = orbit;
+    var a = achs.find(function(a){ return a.id === orbit.dataset.achId; });
+    if(a) showAchDetail(a);
+  });
+
+  achDetailOverlay.addEventListener('click', function(e){
+    if(e.target === this) hideAchDetail();
+  });
+
+  document.getElementById('ach-detail-close').addEventListener('click', hideAchDetail);
+
+  document.getElementById('ach-detail-delete').addEventListener('click', function(e){
+    var id = e.currentTarget.dataset.achId;
+    achs = achs.filter(function(a){ return a.id !== id; });
+    saveAchievements(achs);
+    renderAchievementStars(achs);
+    hideAchDetail();
+  });
+
+  document.getElementById('add-star-btn').addEventListener('click', function(){
+    achModal.classList.add('active');
+  });
+  document.getElementById('ach-modal-close').addEventListener('click', function(){
+    achModal.classList.remove('active');
+  });
+
+  document.getElementById('ach-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('ach-name').value.trim();
+    if(!name) return;
+    var a = {
+      id: 'a' + Date.now(),
+      name: name,
+      type: document.getElementById('ach-type').value,
+      desc: document.getElementById('ach-desc').value.trim(),
+      link: document.getElementById('ach-link').value.trim(),
+      date: document.getElementById('ach-date').value
+    };
+    achs.push(a);
+    saveAchievements(achs);
+    renderAchievementStars(achs);
+    this.reset();
+    achModal.classList.remove('active');
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      if(achDetailOverlay.classList.contains('active')){ hideAchDetail(); }
+      else if(achModal.classList.contains('active')){ achModal.classList.remove('active'); }
+    }
   });
 
   if(window.innerWidth < 768){

@@ -129,6 +129,7 @@ footer .view-source a{color:#555;font-size:11px}
   body:not(.list-mode) #list-view{display:block}
   body:not(.list-mode) #solar-system,body:not(.list-mode) .fixed-ui,body:not(.list-mode) #star-field,body:not(.list-mode) #nebula{display:none!important}
   #safe-mode-toggle{display:none}
+  #add-star-btn{display:none}
   #skills-section{padding:2rem 16px 3rem}
   footer{padding:3rem 16px 2.5rem}
 }
@@ -228,3 +229,279 @@ p { font-size: 16px; margin: 0 0 1rem; }
 .list-project:nth-child(4) { animation-delay: 0.3s; }
 .list-project:nth-child(5) { animation-delay: 0.4s; }
 .list-project:nth-child(6) { animation-delay: 0.5s; }
+
+/* === ACHIEVEMENT STARS === */
+#achievement-orbits { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+
+.star-orbit-path {
+  position: absolute;
+  top: calc(50% - var(--r));
+  left: calc(50% - var(--r));
+  width: calc(2 * var(--r));
+  height: calc(2 * var(--r));
+  border: 1px dotted rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.star-orbit {
+  position: absolute;
+  top: calc(50% - var(--r));
+  left: calc(50% - var(--r));
+  width: calc(2 * var(--r));
+  height: calc(2 * var(--r));
+  animation: spin var(--d) linear infinite;
+  pointer-events: none;
+}
+.star-orbit.selected { animation-play-state: paused; }
+
+.star-body {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border: 1.5px solid var(--star-color);
+  background: transparent;
+  transform: rotate(45deg);
+  box-shadow: 0 0 6px 2px var(--star-glow);
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 20;
+  transition: box-shadow 0.3s;
+  animation: twinkle 2s ease-in-out infinite;
+}
+.star-body.hackathon {
+  --star-color: #ffd700;
+  --star-glow: rgba(255, 215, 0, 0.5);
+}
+.star-body.certification {
+  --star-color: #c0c0c0;
+  --star-glow: rgba(192, 192, 192, 0.4);
+}
+.star-orbit.selected .star-body {
+  box-shadow: 0 0 14px 5px var(--star-glow);
+}
+
+.star-label {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+.star-orbit:hover .star-label { opacity: 1; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 4px 1px var(--star-glow); }
+  50% { opacity: 1; box-shadow: 0 0 10px 3px var(--star-glow); }
+}
+
+/* + Star button */
+#add-star-btn {
+  position: fixed;
+  top: 54px;
+  right: 20px;
+  z-index: 15;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, opacity 0.4s;
+  backdrop-filter: blur(4px);
+}
+#add-star-btn:hover { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.8); }
+#add-star-btn.dimmed { opacity: 0.2; }
+
+/* Achievement modal */
+#achievement-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 8, 0.78);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+#achievement-modal.active { display: flex; }
+
+#ach-modal-content {
+  background: rgba(8, 8, 28, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 88vw;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+#ach-modal-content h3 { font-family: var(--font-serif); font-size: 20px; color: #fff; margin-bottom: 1.5rem; }
+#ach-modal-content label { display: block; font-family: var(--font-sans); font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; }
+#ach-modal-content input,
+#ach-modal-content select,
+#ach-modal-content textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+#ach-modal-content input:focus,
+#ach-modal-content select:focus,
+#ach-modal-content textarea:focus { border-color: rgba(167, 139, 250, 0.5); }
+#ach-modal-content textarea { resize: vertical; min-height: 50px; }
+#ach-modal-content select { cursor: pointer; }
+#ach-modal-content select option { background: #1a1a2e; color: #fff; }
+.form-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+.form-actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.form-actions button[type="submit"] { background: rgba(167, 139, 250, 0.2); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); }
+.form-actions button[type="submit"]:hover { background: rgba(167, 139, 250, 0.35); }
+#ach-modal-close { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.08); }
+#ach-modal-close:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); }
+
+/* Achievement detail overlay */
+#achievement-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 8, 0.78);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  backdrop-filter: blur(2px);
+}
+#achievement-detail-overlay.active { opacity: 1; pointer-events: all; }
+
+#ach-detail-card {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translate(100%, -50%);
+  width: 400px;
+  max-width: 85vw;
+  max-height: 75vh;
+  background: rgba(8, 8, 28, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--ach-color, #a78bfa);
+  border-radius: 12px 0 0 12px;
+  padding: 2rem 1.75rem;
+  overflow-y: auto;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 101;
+}
+#achievement-detail-overlay.active #ach-detail-card { transform: translate(0, -50%); }
+
+#ach-detail-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 24px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: color 0.2s;
+  line-height: 1;
+}
+#ach-detail-close:hover { color: #fff; }
+
+#ach-detail-type-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  letter-spacing: 0.05em;
+}
+#ach-detail-type-badge.hackathon { background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.2); }
+#ach-detail-type-badge.certification { background: rgba(192, 192, 192, 0.1); color: #c0c0c0; border: 1px solid rgba(192, 192, 192, 0.15); }
+
+#ach-detail-name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+#ach-detail-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 1rem;
+}
+
+#ach-detail-desc {
+  font-size: 14px;
+  color: #aaa;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+#ach-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  background: rgba(167, 139, 250, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+}
+#ach-detail-link:hover { background: rgba(167, 139, 250, 0.3); }
+
+#ach-detail-delete {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+#ach-detail-delete:hover { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); }
