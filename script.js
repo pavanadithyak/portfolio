@@ -207,8 +207,10 @@ var DEFAULT_ACHIEVEMENTS = [
   var achModal = document.getElementById('achievement-modal');
 
   function loadAchievements(){
-    var data = localStorage.getItem('achievements');
-    if(data){ return JSON.parse(data); }
+    try {
+      var data = localStorage.getItem('achievements');
+      if(data){ return JSON.parse(data); }
+    } catch(e){ /* corrupted data — reset to defaults */ }
     localStorage.setItem('achievements', JSON.stringify(DEFAULT_ACHIEVEMENTS));
     return DEFAULT_ACHIEVEMENTS;
   }
@@ -317,22 +319,32 @@ var DEFAULT_ACHIEVEMENTS = [
     achModal.classList.remove('active');
   });
 
+  document.querySelectorAll('.type-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      document.querySelectorAll('.type-pill').forEach(function(p){ p.classList.remove('active'); });
+      this.classList.add('active');
+    });
+  });
+
   document.getElementById('ach-form').addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('ach-name').value.trim();
     if(!name) return;
+    var activePill = document.querySelector('.type-pill.active');
     var a = {
       id: 'a' + Date.now(),
       name: name,
-      type: document.getElementById('ach-type').value,
-      desc: document.getElementById('ach-desc').value.trim(),
+      type: activePill ? activePill.dataset.type : 'hackathon',
+      desc: '',
       link: document.getElementById('ach-link').value.trim(),
-      date: document.getElementById('ach-date').value
+      date: ''
     };
     achs.push(a);
     saveAchievements(achs);
     renderAchievementStars(achs);
     this.reset();
+    document.querySelector('.type-pill.hackathon').classList.add('active');
+    document.querySelector('.type-pill.certification').classList.remove('active');
     achModal.classList.remove('active');
   });
 

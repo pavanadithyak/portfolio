@@ -106,7 +106,7 @@
 </div>
 
 <button id="safe-mode-toggle" class="fixed-ui">&boxplus; List view</button>
-<button id="add-star-btn" class="fixed-ui">+ Star</button>
+<button id="add-star-btn" class="fixed-ui">+</button>
 
 <div id="project-overlay">
   <div id="project-card">
@@ -123,16 +123,18 @@
   <div id="ach-modal-content">
     <h3>Add Achievement</h3>
     <form id="ach-form">
-      <label>Name <input type="text" id="ach-name" required></label>
-      <label>Type
-        <select id="ach-type">
-          <option value="hackathon">Hackathon / Contest</option>
-          <option value="certification">Certification</option>
-        </select>
+      <label>Name
+        <input type="text" id="ach-name" placeholder="e.g. Hackathon X" required>
       </label>
-      <label>Description <textarea id="ach-desc" rows="2"></textarea></label>
-      <label>Certificate / Link <input type="url" id="ach-link" placeholder="https://drive.google.com/..."></label>
-      <label>Date <input type="month" id="ach-date"></label>
+      <label>Link
+        <input type="url" id="ach-link" placeholder="https://drive.google.com/...">
+      </label>
+      <label>Type
+        <div class="type-toggle">
+          <div class="type-pill hackathon active" data-type="hackathon">&#9733; Hackathon</div>
+          <div class="type-pill certification" data-type="certification">&#10003; Certification</div>
+        </div>
+      </label>
       <div class="form-actions">
         <button type="submit">Add Star</button>
         <button type="button" id="ach-modal-close">Cancel</button>
