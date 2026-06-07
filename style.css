@@ -257,34 +257,36 @@ p { font-size: 16px; margin: 0 0 1rem; }
 
 .star-body {
   position: absolute;
-  top: -8px;
+  top: -9px;
   left: 50%;
-  width: 16px;
-  height: 16px;
-  margin-left: -8px;
-  border: 2px solid var(--star-color);
-  background: rgba(var(--star-color-rgb), 0.1);
-  transform: rotate(45deg);
-  box-shadow: 0 0 8px 3px var(--star-glow);
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border: none;
+  border-radius: 50%;
+  background: var(--star-color);
+  box-shadow: 0 0 10px 4px var(--star-glow), inset 0 -2px 6px rgba(0,0,0,0.3);
   cursor: pointer;
   pointer-events: auto;
   z-index: 20;
-  transition: box-shadow 0.3s, background 0.3s;
+  transition: box-shadow 0.3s, transform 0.3s;
   animation: twinkle 2.5s ease-in-out infinite;
 }
 .star-body.hackathon {
   --star-color: #ffd700;
   --star-color-rgb: 255, 215, 0;
   --star-glow: rgba(255, 215, 0, 0.5);
+  background: radial-gradient(circle at 30% 25%, #fff8dc 0%, #ffd700 35%, #b8960f 70%, #665300 100%);
 }
 .star-body.certification {
   --star-color: #c0c0c0;
   --star-color-rgb: 192, 192, 192;
   --star-glow: rgba(192, 192, 192, 0.4);
+  background: radial-gradient(circle at 30% 25%, #ffffff 0%, #c0c0c0 35%, #888888 70%, #444444 100%);
 }
 .star-orbit.selected .star-body {
-  box-shadow: 0 0 18px 6px var(--star-glow);
-  background: rgba(var(--star-color-rgb), 0.18);
+  box-shadow: 0 0 22px 8px var(--star-glow), inset 0 -2px 6px rgba(0,0,0,0.3);
+  transform: scale(1.15);
 }
 
 .star-label {
