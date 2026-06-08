@@ -88,8 +88,6 @@
   </div>
 </div>
 
-<div id="achievement-orbits"></div>
-
 <div id="asteroid-belt"></div>
 
 </div>
@@ -106,7 +104,7 @@
 </div>
 
 <button id="safe-mode-toggle" class="fixed-ui">&boxplus; List view</button>
-<button id="add-star-btn" class="fixed-ui">+</button>
+<button id="add-star-btn" class="fixed-ui" title="Add achievement">+</button>
 
 <div id="project-overlay">
   <div id="project-card">
@@ -116,42 +114,6 @@
     <div id="card-tags"></div>
     <div id="card-desc"></div>
     <div id="card-links"></div>
-  </div>
-</div>
-
-<div id="achievement-modal">
-  <div id="ach-modal-content">
-    <h3>Add Achievement</h3>
-    <form id="ach-form">
-      <label>Name
-        <input type="text" id="ach-name" placeholder="e.g. Hackathon X" required>
-      </label>
-      <label>Link
-        <input type="url" id="ach-link" placeholder="https://drive.google.com/...">
-      </label>
-      <label>Type
-        <div class="type-toggle">
-          <div class="type-pill hackathon active" data-type="hackathon">&#9733; Hackathon</div>
-          <div class="type-pill certification" data-type="certification">&#10003; Certification</div>
-        </div>
-      </label>
-      <div class="form-actions">
-        <button type="submit">Add Star</button>
-        <button type="button" id="ach-modal-close">Cancel</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div id="achievement-detail-overlay">
-  <div id="ach-detail-card">
-    <button id="ach-detail-close">&times;</button>
-    <div id="ach-detail-type-badge"></div>
-    <div id="ach-detail-name"></div>
-    <div id="ach-detail-date"></div>
-    <div id="ach-detail-desc"></div>
-    <a id="ach-detail-link" target="_blank">View Certificate</a>
-    <button id="ach-detail-delete">Delete Star</button>
   </div>
 </div>
 

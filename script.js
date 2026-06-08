@@ -1,55 +1,68 @@
 var projects = [
-  {id:0,name:"OceanDisaster Forecast",label:"OceanForecast",color:"#1e6eb5",
-   tags:["PyTorch","Bayesian LSTM","ARIMA","Streamlit","ML","Live"],
-   desc:"Real-time ocean disaster forecasting dashboard. Fetches live marine data from the Open-Meteo Marine API \u2192 dual ML pipeline: Bayesian LSTM with Monte Carlo Dropout for uncertainty quantification + ARIMA baseline \u2192 multi-parameter risk assessment engine with configurable thresholds \u2192 interactive Plotly visualizations. Built for maritime professionals and coastal disaster response.",
-   live:"https://huggingface.co/spaces/paq1/oceanforecast",liveLabel:"LIVE",
-   github:"github.com/pavanadithyak/Oceandisaster-forecast",status:"live"},
-   {id:1,name:"Doc-Analyser",label:"Doc-Analyser",color:"#7c3aed",
-    tags:["FastAPI","Groq","Gemini","Claude","Docker","NER"],
-    desc:"Upload any PDF, DOCX, or image \u2192 multi-model LLM pipeline (Groq / Gemini / Claude) \u2192 NER, classification, confidence-scored summaries \u2192 structured JSON output. Automatic retry logic when model returns malformed responses. Dockerized. Built in 24 hours for a hackathon.",
-    live:"https://huggingface.co/spaces/paq1/doc-analyzer",liveLabel:"LIVE",
-    github:"github.com/pavanadithyak/Doc-analyser",status:"live"},
-  {id:2,name:"devlog-ai",label:"devlog-ai",color:"#22c55e",
-   tags:["Gemini","Streaming","Vanilla JS","Live"],
-   desc:"Paste a git diff, commit log, or error trace \u2192 streaming Gemini API generates changelogs, PR descriptions, standup updates, or postmortems instantly. Zero backend. Fully client-side. Built in one sprint.",
-   live:"https://pavanadithyak.github.io/devlog-ai",liveLabel:"LIVE",
-   github:"github.com/pavanadithyak/devlog-ai",status:"live"},
-  {id:3,name:"Agent Rocky",label:"Agent Rocky",color:"#f97316",
-   tags:["Electron","Groq","Multi-model","Desktop Agent"],
-   desc:"Pixel-art AI companion that lives on your desktop. Walks across your taskbar, opens a retro terminal chat window, jazz-dances when the AI responds. Multi-model support (Groq, Zen). Rate-limit aware. Built in one sprint to explore what ambient AI feels like when it\u2019s not confined to a browser tab.",
-   live:"",liveLabel:"",
-   github:"github.com/paq67/agent-rocky",status:"none"},
-  {id:4,name:"Mirror-Mind",label:"Mirror-Mind",color:"#ec4899",
-   tags:["TypeScript","Node","AI","Full-stack"],
-   desc:"AI-powered mind mirror app. Reflects your thoughts back with structured insight and pattern recognition. TypeScript full-stack with modular architecture.",
-   live:"",liveLabel:"",
-   github:"github.com/paq67/Mirror-Mind",status:"none"},
-  {id:5,name:"AtomQuest Portal",label:"AtomQuest",color:"#06b6d4",
-   tags:["React","Node","PostgreSQL","JWT","Docker"],
-   desc:"Production-grade employee goal-tracking portal. JWT auth, 3-tier RBAC (employee / manager / admin), goal approval workflow, quarterly achievements, audit logs, CSV/JSON export. 24 passing backend tests. Full docker-compose.",
-   live:"",liveLabel:"",
-   github:"github.com/pavanadithyak/atomquest-portal",status:"none"}
+  {
+    id: 0, name: "OceanDisaster Forecast", label: "OceanForecast", color: "#1e6eb5",
+    tags: ["PyTorch", "Bayesian LSTM", "ARIMA", "Streamlit", "ML", "Live"],
+    desc: "Real-time ocean disaster forecasting dashboard. Fetches live marine data from the Open-Meteo Marine API \u2192 dual ML pipeline: Bayesian LSTM with Monte Carlo Dropout for uncertainty quantification + ARIMA baseline \u2192 multi-parameter risk assessment engine with configurable thresholds \u2192 interactive Plotly visualizations. Built for maritime professionals and coastal disaster response.",
+    live: "https://huggingface.co/spaces/paq1/oceanforecast", liveLabel: "LIVE",
+    github: "github.com/pavanadithyak/Oceandisaster-forecast", status: "live"
+  },
+  {
+    id: 1, name: "Doc-Analyser", label: "Doc-Analyser", color: "#7c3aed",
+    tags: ["FastAPI", "Groq", "Gemini", "Claude", "Docker", "NER"],
+    desc: "Upload any PDF, DOCX, or image \u2192 multi-model LLM pipeline (Groq / Gemini / Claude) \u2192 NER, classification, confidence-scored summaries \u2192 structured JSON output. Automatic retry logic when model returns malformed responses. Dockerized. Built in 24 hours for a hackathon.",
+    live: "https://huggingface.co/spaces/paq1/doc-analyzer", liveLabel: "LIVE",
+    github: "github.com/pavanadithyak/Doc-analyser", status: "live"
+  },
+  {
+    id: 2, name: "devlog-ai", label: "devlog-ai", color: "#22c55e",
+    tags: ["Gemini", "Streaming", "Vanilla JS", "Live"],
+    desc: "Paste a git diff, commit log, or error trace \u2192 streaming Gemini API generates changelogs, PR descriptions, standup updates, or postmortems instantly. Zero backend. Fully client-side. Built in one sprint.",
+    live: "https://pavanadithyak.github.io/devlog-ai", liveLabel: "LIVE",
+    github: "github.com/pavanadithyak/devlog-ai", status: "live"
+  },
+  {
+    id: 3, name: "Agent Rocky", label: "Agent Rocky", color: "#f97316",
+    tags: ["Electron", "Groq", "Multi-model", "Desktop Agent"],
+    desc: "Pixel-art AI companion that lives on your desktop. Walks across your taskbar, opens a retro terminal chat window, jazz-dances when the AI responds. Multi-model support (Groq, Zen). Rate-limit aware. Built in one sprint to explore what ambient AI feels like when it\u2019s not confined to a browser tab.",
+    live: "", liveLabel: "",
+    github: "github.com/paq67/agent-rocky", status: "none"
+  },
+  {
+    id: 4, name: "Mirror-Mind", label: "Mirror-Mind", color: "#ec4899",
+    tags: ["TypeScript", "Node", "AI", "Full-stack"],
+    desc: "AI-powered mind mirror app. Reflects your thoughts back with structured insight and pattern recognition. TypeScript full-stack with modular architecture.",
+    live: "", liveLabel: "",
+    github: "github.com/paq67/Mirror-Mind", status: "none"
+  },
+  {
+    id: 5, name: "AtomQuest Portal", label: "AtomQuest", color: "#06b6d4",
+    tags: ["React", "Node", "PostgreSQL", "JWT", "Docker"],
+    desc: "Production-grade employee goal-tracking portal. JWT auth, 3-tier RBAC (employee / manager / admin), goal approval workflow, quarterly achievements, audit logs, CSV/JSON export. 24 passing backend tests. Full docker-compose.",
+    live: "", liveLabel: "",
+    github: "github.com/pavanadithyak/atomquest-portal", status: "none"
+  }
 ];
-
-var STAR_RADII = [85, 145, 220, 310, 405, 495, 585, 650];
 
 var DEFAULT_ACHIEVEMENTS = [
-  {id:"a0",name:"Appizap Runner Up",type:"hackathon",desc:"Runner up at Appizap — multi-model LLM pipeline for document analysis. Built Doc-Analyser in 24 hours.",link:"https://drive.google.com/file/d/1v0sthi_qZ7tl-akKl8W5CQW6GUhOZ2GT/view",date:"2025-11"},
-  {id:"a1",name:"Project Showcase Competition",type:"hackathon",desc:"ECE project showcase — presented OceanDisaster Forecast and secured recognition.",link:"https://drive.google.com/file/d/1wCWu8OBa3QH5Lw7epEZnkTFbQJ9i0xAV/view",date:"2026-01"},
-  {id:"a2",name:"Databricks Certified Generative AI Engineer Associate",type:"certification",desc:"Validates expertise in applying generative AI using Databricks. Covers LLMOps, RAG architecture, model fine-tuning, and production deployment patterns.",link:"https://drive.google.com/file/d/1_pQz9jOHCZNn0NBF6NMFm5XGkyPhRiyi/view",date:"2026-04"},
-  {id:"a3",name:"Databricks Certified Data Engineer Associate",type:"certification",desc:"Validates data engineering skills on the Databricks Lakehouse Platform. Topics include ETL pipelines, Delta Lake optimizations, and data governance.",link:"https://drive.google.com/file/d/1M6tS-2J3rRPmMfQFlmQvyfFO0t4TwmSG/view",date:"2026-05"},
-  {id:"a4",name:"ICISD'26 — Paper Presenter",type:"hackathon",desc:"Presented research paper at the International Conference on Intelligent Systems and Data Science (ICISD 2026).",link:"https://drive.google.com/file/d/1wv4Q8mnKQ1kPE-n4sRsqQ7DbmS5qFcxH/view",date:"2026-03"},
-  {id:"a5",name:"Upagraha Hackathon",type:"hackathon",desc:"Built AtomQuest Portal — employee goal-tracking platform with JWT auth, RBAC, goal approval workflow, and CSV/JSON export.",link:"https://drive.google.com/file/d/1wwWXFHjCMBcdHFSpC0j30cVpMcv6qJ2K/view",date:"2025-12"}
+  { id: "a0", name: "Appizap Runner Up", type: "hackathon", desc: "Runner up at Appizap — multi-model LLM pipeline for document analysis. Built Doc-Analyser in 24 hours.", link: "https://drive.google.com/file/d/1e8VDDMWdktKpahxcHPDG9H6KTouWpUhp/view", date: "2025-11" },
+  { id: "a1", name: "comspro", type: "hackathon", desc: "ECE project showcase — presented projects and secured recognition.", link: "https://drive.google.com/file/d/18ykzEhYLEz3-ABF2GbXLySUXa_zH6oES/view", date: "2026-01" },
+  { id: "a2", name: "Databricks Certified Generative AI Engineer Associate", type: "certification", desc: "Validates expertise in applying generative AI using Databricks. Covers LLMOps, RAG architecture, model fine-tuning, and production deployment patterns.", link: "https://drive.google.com/file/d/15Qwp9th5lPER3gd4ONC9e2sXmkL_BK6Y/view", date: "2026-04" },
+  { id: "a3", name: "Databricks Certified Data Engineer Associate", type: "certification", desc: "Validates data engineering skills on the Databricks Lakehouse Platform. Topics include ETL pipelines, Delta Lake optimizations, and data governance.", link: "https://drive.google.com/file/d/1kgnLP66SciiRmibSdlXNQIz1pBocz5aY/view", date: "2026-05" },
+  { id: "a4", name: "ICISD'26 — Paper Presenter", type: "hackathon", desc: "Presented research paper at the International Conference on Intelligent Systems and Data Science (ICISD 2026).", link: "https://drive.google.com/file/d/1kctCbCzjStXjDZzt_38a6xbRyhJq4zCs/view", date: "2026-03" },
+  { id: "a5", name: "Upagraha Hackathon", type: "hackathon", desc: "Built AtomQuest Portal — employee goal-tracking platform with JWT auth, RBAC, goal approval workflow, and CSV/JSON export.", link: "https://drive.google.com/file/d/10JMYIT-n1wVHQOFAPLiVbr5aM8cGpXWK/view", date: "2025-12" }
 ];
 
-(function(){
+(function () {
   var canvas = document.getElementById('star-field');
   var ctx = canvas.getContext('2d');
-  function drawStars(){
+
+  function drawStars() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for(var i = 0; i < 200; i++){
+
+    // Base 200 stars — full viewport
+    for (var i = 0; i < 200; i++) {
       var x = Math.random() * canvas.width;
       var y = Math.random() * canvas.height;
       var s = Math.random() * 2 + 1;
@@ -58,10 +71,28 @@ var DEFAULT_ACHIEVEMENTS = [
       ctx.arc(x, y, s / 2, 0, Math.PI * 2);
       ctx.fill();
     }
-  }
-  drawStars();
-  window.addEventListener('resize', drawStars);
 
+    // 66 extra stars biased to left/right 30% — denser side margins
+    for (var j = 0; j < 66; j++) {
+      var x2;
+      if (Math.random() < 0.5) {
+        x2 = Math.random() * canvas.width * 0.3;
+      } else {
+        x2 = canvas.width * 0.7 + Math.random() * canvas.width * 0.3;
+      }
+      var y2 = Math.random() * canvas.height;
+      var s2 = Math.random() * 2 + 1;
+      ctx.fillStyle = 'rgba(255,255,255,' + (Math.random() * 0.7 + 0.2) + ')';
+      ctx.beginPath();
+      ctx.arc(x2, y2, s2 / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  drawStars();
+  window.addEventListener('resize', function(){ drawStars(); renderAchievementStars(); });
+
+  // Asteroid belt
   var svgNS = 'http://www.w3.org/2000/svg';
   var belt = document.getElementById('asteroid-belt');
   var svg = document.createElementNS(svgNS, 'svg');
@@ -69,7 +100,7 @@ var DEFAULT_ACHIEVEMENTS = [
   svg.setAttribute('height', '700');
   svg.setAttribute('viewBox', '0 0 700 700');
   var g = document.createElementNS(svgNS, 'g');
-  for(var i = 0; i < 60; i++){
+  for (var i = 0; i < 60; i++) {
     var angle = Math.random() * Math.PI * 2;
     var r = 340 + (Math.random() - 0.5) * 40;
     var cx = 350 + Math.cos(angle) * r;
@@ -84,6 +115,7 @@ var DEFAULT_ACHIEVEMENTS = [
   svg.appendChild(g);
   belt.appendChild(svg);
 
+  // Planet click / project card
   var selectedOrbit = null;
   var overlay = document.getElementById('project-overlay');
   var card = document.getElementById('project-card');
@@ -94,19 +126,19 @@ var DEFAULT_ACHIEVEMENTS = [
   var cardStatus = document.getElementById('card-status');
   var solarSystem = document.getElementById('solar-system');
 
-  function showCard(id){
+  function showCard(id) {
     var p = projects[id];
     card.style.setProperty('--card-color', p.color);
     cardTitle.textContent = p.name;
-    cardTags.innerHTML = p.tags.map(function(t){ return '<span>' + t + '</span>'; }).join('');
+    cardTags.innerHTML = p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
     cardDesc.textContent = p.desc;
     var linksHTML = '';
 
-    if(p.status === 'live'){
+    if (p.status === 'live') {
       cardStatus.textContent = '\u25cf LIVE';
       cardStatus.className = 'status-live';
       linksHTML += '<a href="' + p.live + '" target="_blank" class="btn-live">\u2192 Live Demo</a>';
-    } else if(p.status === 'deploying'){
+    } else if (p.status === 'deploying') {
       cardStatus.textContent = '\u25cf DEPLOYING';
       cardStatus.className = 'status-deploying';
       linksHTML += '<span class="btn-deploying">Deploying \u2014 HF Spaces in progress</span>';
@@ -120,66 +152,72 @@ var DEFAULT_ACHIEVEMENTS = [
     overlay.classList.add('active');
   }
 
-  function hideCard(){
+  function hideCard() {
     overlay.classList.remove('active');
-    if(selectedOrbit){
+    if (selectedOrbit) {
       selectedOrbit.classList.remove('selected');
       selectedOrbit = null;
     }
   }
 
-  document.querySelectorAll('.planet-body').forEach(function(el){
-    el.addEventListener('click', function(e){
+  document.querySelectorAll('.planet-body').forEach(function (el) {
+    el.addEventListener('click', function (e) {
       var orbit = this.closest('.orbit');
-      if(selectedOrbit && selectedOrbit !== orbit){
+      if (selectedOrbit && selectedOrbit !== orbit) {
         selectedOrbit.classList.remove('selected');
       }
       orbit.classList.add('selected');
       selectedOrbit = orbit;
       var id = Number(orbit.dataset.planet);
       solarSystem.classList.add('dimmed');
-      document.querySelectorAll('.fixed-ui').forEach(function(f){ f.classList.add('dimmed'); });
+      document.querySelectorAll('.fixed-ui').forEach(function (f) { f.classList.add('dimmed'); });
       showCard(id);
       e.stopPropagation();
     });
   });
 
-  overlay.addEventListener('click', function(e){
-    if(e.target === this){
+  overlay.addEventListener('click', function (e) {
+    if (e.target === this) {
       solarSystem.classList.remove('dimmed');
-      document.querySelectorAll('.fixed-ui').forEach(function(el){ el.classList.remove('dimmed'); });
+      document.querySelectorAll('.fixed-ui').forEach(function (el) { el.classList.remove('dimmed'); });
       hideCard();
     }
   });
 
-  document.getElementById('card-close').addEventListener('click', function(){
+  document.getElementById('card-close').addEventListener('click', function () {
     solarSystem.classList.remove('dimmed');
-    document.querySelectorAll('.fixed-ui').forEach(function(el){ el.classList.remove('dimmed'); });
+    document.querySelectorAll('.fixed-ui').forEach(function (el) { el.classList.remove('dimmed'); });
     hideCard();
   });
 
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && overlay.classList.contains('active')){
-      solarSystem.classList.remove('dimmed');
-      document.querySelectorAll('.fixed-ui').forEach(function(el){ el.classList.remove('dimmed'); });
-      hideCard();
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (overlay.classList.contains('active')) {
+        solarSystem.classList.remove('dimmed');
+        document.querySelectorAll('.fixed-ui').forEach(function (el) { el.classList.remove('dimmed'); });
+        hideCard();
+      }
+      if (typeof closeAchievementModal === 'function') closeAchievementModal();
+      if (typeof closeAddForm === 'function') closeAddForm();
     }
   });
 
+  // List / Solar toggle
   var toggleBtn = document.getElementById('safe-mode-toggle');
-  toggleBtn.addEventListener('click', function(){
+  toggleBtn.addEventListener('click', function () {
     document.body.classList.toggle('list-mode');
     this.textContent = document.body.classList.contains('list-mode') ? '\u229e Solar view' : '\u229e List view';
   });
 
   var closeBtn = document.getElementById('list-view-close');
-  if(closeBtn){
-    closeBtn.addEventListener('click', function(){
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
       document.body.classList.remove('list-mode');
       document.getElementById('safe-mode-toggle').textContent = '\u229e List view';
     });
   }
 
+  // Sun click captions
   var sun = document.getElementById('sun');
   var captions = [
     'ECE undergrad. Builder.',
@@ -188,10 +226,10 @@ var DEFAULT_ACHIEVEMENTS = [
     'Making AI useful, one project at a time.'
   ];
   var captionIndex = -1;
-  sun.addEventListener('click', function(){
+  sun.addEventListener('click', function () {
     captionIndex = (captionIndex + 1) % captions.length;
     var tip = document.querySelector('#sun-tooltip .tagline');
-    if(!tip){
+    if (!tip) {
       tip = document.createElement('div');
       tip.className = 'tagline';
       var role = document.querySelector('#sun-tooltip .role');
@@ -200,162 +238,201 @@ var DEFAULT_ACHIEVEMENTS = [
     tip.innerHTML = '\u201c' + captions[captionIndex] + '\u201d';
   });
 
-  /* === ACHIEVEMENT STARS === */
-  var achContainer = document.getElementById('achievement-orbits');
-  var selectedAchOrbit = null;
-  var achDetailOverlay = document.getElementById('achievement-detail-overlay');
-  var achModal = document.getElementById('achievement-modal');
+  if (window.innerWidth < 768) {
+    document.body.classList.add('list-mode');
+  }
+
+  /* ─── ACHIEVEMENT STARS ────────────────────────────────────── */
 
   function loadAchievements(){
     try {
-      var data = localStorage.getItem('achievements');
-      if(data){ return JSON.parse(data); }
-    } catch(e){ /* corrupted data — reset to defaults */ }
-    localStorage.setItem('achievements', JSON.stringify(DEFAULT_ACHIEVEMENTS));
-    return DEFAULT_ACHIEVEMENTS;
+      var stored = localStorage.getItem('portfolio_achievements');
+      return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_ACHIEVEMENTS));
+    } catch(e){ return JSON.parse(JSON.stringify(DEFAULT_ACHIEVEMENTS)); }
   }
 
-  function saveAchievements(achs){
-    localStorage.setItem('achievements', JSON.stringify(achs));
+  function saveAchievements(arr){
+    try { localStorage.setItem('portfolio_achievements', JSON.stringify(arr)); } catch(e){}
   }
 
-  function renderAchievementStars(achs){
-    achContainer.innerHTML = '';
-    achs.forEach(function(a, i){
-      var r = STAR_RADII[i % STAR_RADII.length];
-      var path = document.createElement('div');
-      path.className = 'star-orbit-path';
-      path.style.setProperty('--r', r + 'px');
-      achContainer.appendChild(path);
+  var achievements = loadAchievements();
 
-      var orbit = document.createElement('div');
-      orbit.className = 'star-orbit';
-      orbit.dataset.achId = a.id;
-      orbit.style.setProperty('--r', r + 'px');
-      orbit.style.setProperty('--d', (8 + i * 3) + 's');
+  function drivePreviewUrl(url){
+    if(!url) return '';
+    var m = url.match(/\/file\/d\/([^\/\?]+)/);
+    if(m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
+    return url;
+  }
 
-      var body = document.createElement('div');
-      body.className = 'star-body ' + a.type;
-      body.title = a.name;
+  var starsContainer = document.getElementById('achievement-stars-layer');
+  if(!starsContainer){
+    starsContainer = document.createElement('div');
+    starsContainer.id = 'achievement-stars-layer';
+    document.body.appendChild(starsContainer);
+  }
 
-      var label = document.createElement('span');
-      label.className = 'star-label';
-      label.textContent = a.name;
+  var starPositions = [];
 
-      orbit.appendChild(body);
-      orbit.appendChild(label);
-      achContainer.appendChild(orbit);
+  function seedPositions(count){
+    while(starPositions.length < count){
+      var side = Math.random();
+      var px, py;
+      if(side < 0.4){
+        px = 2 + Math.random() * 18;
+      } else if(side < 0.8){
+        px = 80 + Math.random() * 18;
+      } else {
+        px = 5 + Math.random() * 90;
+      }
+      py = 5 + Math.random() * 90;
+      starPositions.push({px: px, py: py});
+    }
+  }
+
+  function renderAchievementStars(){
+    seedPositions(achievements.length);
+    starsContainer.innerHTML = '';
+    achievements.forEach(function(a, idx){
+      var pos = starPositions[idx];
+      var el = document.createElement('div');
+      el.className = 'achievement-star';
+      el.dataset.id = a.id;
+      el.style.left = pos.px + '%';
+      el.style.top  = pos.py + '%';
+      el.setAttribute('title', a.name);
+      el.innerHTML = '<span class="achievement-star-glyph"></span>';
+      el.addEventListener('click', function(e){
+        e.stopPropagation();
+        openAchievementModal(a);
+      });
+      starsContainer.appendChild(el);
     });
   }
 
-  function showAchDetail(a){
-    var badge = document.getElementById('ach-detail-type-badge');
-    badge.textContent = a.type === 'hackathon' ? '\u2605 HACKATHON' : '\u2713 CERTIFICATION';
-    badge.className = a.type;
-    document.getElementById('ach-detail-name').textContent = a.name;
-    document.getElementById('ach-detail-date').textContent = a.date.replace('-', ' / ');
-    document.getElementById('ach-detail-desc').textContent = a.desc;
-    var link = document.getElementById('ach-detail-link');
+  renderAchievementStars();
+
+  /* ── Achievement modal ── */
+
+  var achModal = document.getElementById('achievement-modal');
+  if(!achModal){
+    achModal = document.createElement('div');
+    achModal.id = 'achievement-modal';
+    achModal.innerHTML =
+      '<div id="achievement-modal-inner">' +
+        '<button id="achievement-modal-close">&times;</button>' +
+        '<div id="achievement-modal-type"></div>' +
+        '<div id="achievement-modal-name"></div>' +
+        '<div id="achievement-modal-date"></div>' +
+        '<div id="achievement-modal-desc"></div>' +
+        '<div id="achievement-modal-img-wrap">' +
+          '<iframe id="achievement-modal-iframe" allowfullscreen></iframe>' +
+        '</div>' +
+        '<div id="achievement-modal-actions">' +
+          '<a id="achievement-modal-link" href="#" target="_blank">View Certificate &rarr;</a>' +
+          '<button id="achievement-modal-delete">Delete</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(achModal);
+  }
+
+  var currentAchId = null;
+
+  function openAchievementModal(a){
+    currentAchId = a.id;
+    document.getElementById('achievement-modal-type').textContent =
+      a.type === 'certification' ? '\u2713 Certification' : '\u2605 Hackathon / Award';
+    document.getElementById('achievement-modal-name').textContent = a.name;
+    document.getElementById('achievement-modal-date').textContent = a.date || '';
+    document.getElementById('achievement-modal-desc').textContent = a.desc || '';
+    var iframe = document.getElementById('achievement-modal-iframe');
     if(a.link){
-      link.href = a.link;
-      link.style.display = 'inline-flex';
+      iframe.src = drivePreviewUrl(a.link);
+      document.getElementById('achievement-modal-img-wrap').style.display = 'block';
+      document.getElementById('achievement-modal-link').href = a.link;
+      document.getElementById('achievement-modal-link').style.display = 'inline-flex';
     } else {
-      link.style.display = 'none';
+      iframe.src = '';
+      document.getElementById('achievement-modal-img-wrap').style.display = 'none';
+      document.getElementById('achievement-modal-link').style.display = 'none';
     }
-    var delBtn = document.getElementById('ach-detail-delete');
-    delBtn.dataset.achId = a.id;
-    var card = document.getElementById('ach-detail-card');
-    card.style.setProperty('--ach-color', a.type === 'hackathon' ? '#ffd700' : '#c0c0c0');
-    solarSystem.classList.add('dimmed');
-    document.querySelectorAll('.fixed-ui').forEach(function(f){ f.classList.add('dimmed'); });
-    achDetailOverlay.classList.add('active');
-  }
-
-  function hideAchDetail(){
-    achDetailOverlay.classList.remove('active');
-    solarSystem.classList.remove('dimmed');
-    document.querySelectorAll('.fixed-ui').forEach(function(f){ f.classList.remove('dimmed'); });
-    if(selectedAchOrbit){
-      selectedAchOrbit.classList.remove('selected');
-      selectedAchOrbit = null;
-    }
-  }
-
-  var achs = loadAchievements();
-  renderAchievementStars(achs);
-
-  achContainer.addEventListener('click', function(e){
-    var body = e.target.closest('.star-body');
-    if(!body) return;
-    var orbit = body.closest('.star-orbit');
-    if(!orbit) return;
-    if(selectedAchOrbit && selectedAchOrbit !== orbit){
-      selectedAchOrbit.classList.remove('selected');
-    }
-    orbit.classList.add('selected');
-    selectedAchOrbit = orbit;
-    var a = achs.find(function(a){ return a.id === orbit.dataset.achId; });
-    if(a) showAchDetail(a);
-  });
-
-  achDetailOverlay.addEventListener('click', function(e){
-    if(e.target === this) hideAchDetail();
-  });
-
-  document.getElementById('ach-detail-close').addEventListener('click', hideAchDetail);
-
-  document.getElementById('ach-detail-delete').addEventListener('click', function(e){
-    var id = e.currentTarget.dataset.achId;
-    achs = achs.filter(function(a){ return a.id !== id; });
-    saveAchievements(achs);
-    renderAchievementStars(achs);
-    hideAchDetail();
-  });
-
-  document.getElementById('add-star-btn').addEventListener('click', function(){
     achModal.classList.add('active');
-  });
-  document.getElementById('ach-modal-close').addEventListener('click', function(){
-    achModal.classList.remove('active');
-  });
-
-  document.querySelectorAll('.type-pill').forEach(function(pill){
-    pill.addEventListener('click', function(){
-      document.querySelectorAll('.type-pill').forEach(function(p){ p.classList.remove('active'); });
-      this.classList.add('active');
-    });
-  });
-
-  document.getElementById('ach-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    var name = document.getElementById('ach-name').value.trim();
-    if(!name) return;
-    var activePill = document.querySelector('.type-pill.active');
-    var a = {
-      id: 'a' + Date.now(),
-      name: name,
-      type: activePill ? activePill.dataset.type : 'hackathon',
-      desc: '',
-      link: document.getElementById('ach-link').value.trim(),
-      date: ''
-    };
-    achs.push(a);
-    saveAchievements(achs);
-    renderAchievementStars(achs);
-    this.reset();
-    document.querySelector('.type-pill.hackathon').classList.add('active');
-    document.querySelector('.type-pill.certification').classList.remove('active');
-    achModal.classList.remove('active');
-  });
-
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){
-      if(achDetailOverlay.classList.contains('active')){ hideAchDetail(); }
-      else if(achModal.classList.contains('active')){ achModal.classList.remove('active'); }
-    }
-  });
-
-  if(window.innerWidth < 768){
-    document.body.classList.add('list-mode');
   }
+
+  function closeAchievementModal(){
+    achModal.classList.remove('active');
+    document.getElementById('achievement-modal-iframe').src = '';
+    currentAchId = null;
+  }
+
+  document.getElementById('achievement-modal-close').addEventListener('click', closeAchievementModal);
+  achModal.addEventListener('click', function(e){ if(e.target === this) closeAchievementModal(); });
+
+  document.getElementById('achievement-modal-delete').addEventListener('click', function(){
+    if(!currentAchId) return;
+    achievements = achievements.filter(function(a){ return a.id !== currentAchId; });
+    starPositions.splice(achievements.length);
+    saveAchievements(achievements);
+    renderAchievementStars();
+    closeAchievementModal();
+  });
+
+  /* ── Add Star form ── */
+
+  var addBtn = document.getElementById('add-star-btn');
+  var addForm = document.getElementById('add-star-form');
+
+  if(!addForm){
+    addForm = document.createElement('div');
+    addForm.id = 'add-star-form';
+    addForm.innerHTML =
+      '<div id="add-star-form-inner">' +
+        '<button id="add-star-form-close">&times;</button>' +
+        '<div id="add-star-form-title">Add Achievement</div>' +
+        '<input id="star-input-name" type="text" placeholder="Name" />' +
+        '<input id="star-input-link" type="text" placeholder="Certificate link (Google Drive)" />' +
+        '<div id="star-type-row">' +
+          '<label><input type="radio" name="star-type" value="hackathon" checked /> \u2605 Hackathon</label>' +
+          '<label><input type="radio" name="star-type" value="certification" /> \u2713 Certification</label>' +
+        '</div>' +
+        '<textarea id="star-input-desc" placeholder="Short description (optional)"></textarea>' +
+        '<div id="add-star-form-btns">' +
+          '<button id="star-submit-btn">Add Star</button>' +
+          '<button id="star-cancel-btn">Cancel</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(addForm);
+  }
+
+  function openAddForm(){
+    addForm.classList.add('active');
+    document.getElementById('star-input-name').focus();
+  }
+  function closeAddForm(){
+    addForm.classList.remove('active');
+    document.getElementById('star-input-name').value = '';
+    document.getElementById('star-input-link').value = '';
+    document.getElementById('star-input-desc').value = '';
+    document.querySelector('input[name="star-type"][value="hackathon"]').checked = true;
+  }
+
+  if(addBtn) addBtn.addEventListener('click', openAddForm);
+  document.getElementById('add-star-form-close').addEventListener('click', closeAddForm);
+  document.getElementById('star-cancel-btn').addEventListener('click', closeAddForm);
+  addForm.addEventListener('click', function(e){ if(e.target === this) closeAddForm(); });
+
+  document.getElementById('star-submit-btn').addEventListener('click', function(){
+    var name = document.getElementById('star-input-name').value.trim();
+    if(!name) return;
+    var type = document.querySelector('input[name="star-type"]:checked').value;
+    var link = document.getElementById('star-input-link').value.trim();
+    var desc = document.getElementById('star-input-desc').value.trim();
+    var id = 'a' + Date.now();
+    var now = new Date();
+    var date = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+    achievements.push({id:id, name:name, type:type, link:link, desc:desc, date:date});
+    saveAchievements(achievements);
+    renderAchievementStars();
+    closeAddForm();
+  });
+
 })();

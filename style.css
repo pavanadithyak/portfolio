@@ -63,6 +63,10 @@ body{background:#000008;color:#e0e0e0;font-family:var(--font-sans);min-height:10
 #safe-mode-toggle.dimmed{opacity:.2}
 #safe-mode-toggle:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8)}
 
+#add-star-btn{position:fixed;top:60px;right:20px;z-index:15;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);font-size:18px;font-family:'JetBrains Mono',monospace;cursor:pointer;transition:background .2s,color .2s,border-color .2s,opacity .4s;backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
+#add-star-btn:hover{background:rgba(255,255,255,.12);color:#ffd700;border-color:rgba(255,215,0,.3)}
+#add-star-btn.dimmed{opacity:.2}
+
 #project-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,8,.78);z-index:100;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(2px)}
 #project-overlay.active{opacity:1;pointer-events:all}
 
@@ -88,7 +92,7 @@ body{background:#000008;color:#e0e0e0;font-family:var(--font-sans);min-height:10
 
 #list-view{display:none;padding:2rem 24px;max-width:720px;margin:0 auto}
 body.list-mode #list-view{display:block}
-body.list-mode #solar-system,body.list-mode .fixed-ui,body.list-mode #star-field,body.list-mode #nebula{display:none!important}
+body.list-mode #solar-system,body.list-mode .fixed-ui,body.list-mode #star-field,body.list-mode #nebula,body.list-mode #achievement-stars-layer{display:none!important}
 
 .list-project{margin:2rem 0;padding:1.5rem;background:rgba(255,255,255,0.02);border:0.5px solid rgba(255,255,255,0.06);border-left:2px solid var(--accent-color);border-radius:8px;transition:box-shadow 0.2s ease,transform 0.2s ease;opacity:0;animation:fadeInUp 0.6s ease-out forwards}
 .list-project:last-child{margin-bottom:0}
@@ -230,279 +234,160 @@ p { font-size: 16px; margin: 0 0 1rem; }
 .list-project:nth-child(5) { animation-delay: 0.4s; }
 .list-project:nth-child(6) { animation-delay: 0.5s; }
 
-/* === ACHIEVEMENT STARS === */
-#achievement-orbits { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+/* ─── ACHIEVEMENT STARS LAYER ────────────────────────────────────── */
 
-.star-orbit-path {
-  position: absolute;
-  top: calc(50% - var(--r));
-  left: calc(50% - var(--r));
-  width: calc(2 * var(--r));
-  height: calc(2 * var(--r));
-  border: 1px dotted rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.star-orbit {
-  position: absolute;
-  top: calc(50% - var(--r));
-  left: calc(50% - var(--r));
-  width: calc(2 * var(--r));
-  height: calc(2 * var(--r));
-  animation: spin var(--d) linear infinite;
-  pointer-events: none;
-}
-.star-orbit.selected { animation-play-state: paused; }
-
-.star-body {
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  width: 18px;
-  height: 18px;
-  margin-left: -9px;
-  border: none;
-  border-radius: 50%;
-  background: var(--star-color);
-  box-shadow: 0 0 10px 4px var(--star-glow), inset 0 -2px 6px rgba(0,0,0,0.3);
-  cursor: pointer;
-  pointer-events: auto;
-  z-index: 20;
-  transition: box-shadow 0.3s, transform 0.3s;
-  animation: twinkle 2.5s ease-in-out infinite;
-}
-.star-body.hackathon {
-  --star-color: #ffd700;
-  --star-color-rgb: 255, 215, 0;
-  --star-glow: rgba(255, 215, 0, 0.5);
-  background: radial-gradient(circle at 30% 25%, #fff8dc 0%, #ffd700 35%, #b8960f 70%, #665300 100%);
-}
-.star-body.certification {
-  --star-color: #c0c0c0;
-  --star-color-rgb: 192, 192, 192;
-  --star-glow: rgba(192, 192, 192, 0.4);
-  background: radial-gradient(circle at 30% 25%, #ffffff 0%, #c0c0c0 35%, #888888 70%, #444444 100%);
-}
-.star-orbit.selected .star-body {
-  box-shadow: 0 0 22px 8px var(--star-glow), inset 0 -2px 6px rgba(0,0,0,0.3);
-  transform: scale(1.15);
-}
-
-.star-label {
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.25s;
-  pointer-events: none;
-}
-.star-orbit:hover .star-label { opacity: 1; }
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.6; box-shadow: 0 0 6px 2px var(--star-glow); }
-  50% { opacity: 1; box-shadow: 0 0 14px 5px var(--star-glow); }
-}
-
-/* Round add-star button (bottom-right) */
-#add-star-btn {
+#achievement-stars-layer {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 15;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 18px;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.achievement-star {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
   line-height: 1;
+  user-select: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.achievement-star-glyph {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f0e8d8;
+  display: block;
+  box-shadow: 0 0 6px 2px rgba(240, 232, 216, 0.4),
+              0 0 14px 4px rgba(240, 232, 216, 0.15);
+  animation: star-twinkle 3s ease-in-out infinite;
+}
+
+.achievement-star:nth-child(2) .achievement-star-glyph { animation-delay: 0.4s; }
+.achievement-star:nth-child(3) .achievement-star-glyph { animation-delay: 0.8s; }
+.achievement-star:nth-child(4) .achievement-star-glyph { animation-delay: 1.2s; }
+.achievement-star:nth-child(5) .achievement-star-glyph { animation-delay: 1.6s; }
+.achievement-star:nth-child(6) .achievement-star-glyph { animation-delay: 2.0s; }
+
+.achievement-star:hover {
+  transform: translate(-50%, -50%) scale(1.6);
+  z-index: 10;
+}
+.achievement-star:hover .achievement-star-glyph {
+  background: #fff8ec;
+  box-shadow: 0 0 10px 4px rgba(240, 232, 216, 0.6),
+              0 0 24px 8px rgba(240, 232, 216, 0.3),
+              0 0 48px 16px rgba(240, 232, 216, 0.12);
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* ─── ACHIEVEMENT MODAL ──────────────────────────────────────────── */
+
+#achievement-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 10, 0.82);
+  backdrop-filter: blur(4px);
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, opacity 0.4s, transform 0.2s;
-  backdrop-filter: blur(4px);
-  font-family: var(--font-sans);
-  padding: 0;
-}
-#add-star-btn:hover { background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.8); transform: scale(1.1); }
-#add-star-btn.dimmed { opacity: 0.2; }
-
-/* Glassmorphic achievement modal */
-#achievement-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 8, 0.5);
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-#achievement-modal.active { display: flex; }
-
-#ach-modal-content {
-  background: rgba(10, 10, 30, 0.45);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 2rem;
-  max-width: 380px;
-  width: 85vw;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-}
-#ach-modal-content h3 { font-family: var(--font-serif); font-size: 18px; color: #fff; margin-bottom: 1.25rem; text-align: center; letter-spacing: 0.02em; }
-#ach-modal-content label { display: block; font-family: var(--font-sans); font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
-#ach-modal-content input {
-  display: block;
-  width: 100%;
-  margin-top: 5px;
-  padding: 10px 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: #fff;
-  outline: none;
-  transition: border-color 0.2s;
-  box-sizing: border-box;
-}
-#ach-modal-content input:focus { border-color: rgba(167, 139, 250, 0.5); }
-#ach-modal-content input::placeholder { color: rgba(255,255,255,0.15); }
-
-.type-toggle { display: flex; gap: 6px; margin-top: 5px; }
-.type-pill {
-  flex: 1;
-  padding: 8px 12px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.03);
-  color: rgba(255,255,255,0.3);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-}
-.type-pill:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
-.type-pill.active { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.12); }
-.type-pill.active.hackathon { border-color: rgba(255, 215, 0, 0.3); color: #ffd700; }
-.type-pill.active.certification { border-color: rgba(192, 192, 192, 0.3); color: #c0c0c0; }
-
-.form-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
-.form-actions button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
-}
-.form-actions button[type="submit"] { background: rgba(167, 139, 250, 0.2); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.25); }
-.form-actions button[type="submit"]:hover { background: rgba(167, 139, 250, 0.35); }
-#ach-modal-close { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.06); }
-#ach-modal-close:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
-
-/* Achievement detail overlay */
-#achievement-detail-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 8, 0.78);
-  z-index: 100;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s;
-  backdrop-filter: blur(2px);
+  transition: opacity 0.3s ease;
 }
-#achievement-detail-overlay.active { opacity: 1; pointer-events: all; }
+#achievement-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
 
-#ach-detail-card {
-  position: fixed;
-  top: 50%;
-  right: 0;
-  transform: translate(100%, -50%);
-  width: 400px;
-  max-width: 85vw;
-  max-height: 75vh;
-  background: rgba(8, 8, 28, 0.97);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 3px solid var(--ach-color, #a78bfa);
-  border-radius: 12px 0 0 12px;
-  padding: 2rem 1.75rem;
+#achievement-modal-inner {
+  position: relative;
+  width: 520px;
+  max-width: 92vw;
+  max-height: 88vh;
   overflow-y: auto;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 101;
+  background: rgba(8, 8, 28, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 32px 28px 24px;
+  transform: translateY(18px);
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1);
 }
-#achievement-detail-overlay.active #ach-detail-card { transform: translate(0, -50%); }
+#achievement-modal.active #achievement-modal-inner {
+  transform: translateY(0);
+}
 
-#ach-detail-close {
+#achievement-modal-close {
   position: absolute;
-  top: 14px;
-  right: 16px;
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 24px;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  transition: color 0.2s;
-  line-height: 1;
+  top: 14px; right: 16px;
+  background: none; border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 24px; cursor: pointer;
+  line-height: 1; transition: color 0.2s;
 }
-#ach-detail-close:hover { color: #fff; }
+#achievement-modal-close:hover { color: #fff; }
 
-#ach-detail-type-badge {
-  display: inline-block;
+#achievement-modal-type {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  padding: 3px 10px;
-  border-radius: 4px;
-  margin-bottom: 14px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  color: #ffd700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
-#ach-detail-type-badge.hackathon { background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.2); }
-#ach-detail-type-badge.certification { background: rgba(192, 192, 192, 0.1); color: #c0c0c0; border: 1px solid rgba(192, 192, 192, 0.15); }
 
-#ach-detail-name {
-  font-family: var(--font-serif);
+#achievement-modal-name {
+  font-family: 'Playfair Display', serif;
   font-size: 20px;
-  font-weight: 500;
   color: #fff;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+  line-height: 1.3;
 }
 
-#ach-detail-date {
+#achievement-modal-date {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.3);
-  margin-bottom: 1rem;
+  color: #555;
+  margin-bottom: 12px;
 }
 
-#ach-detail-desc {
-  font-size: 14px;
-  color: #aaa;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
+#achievement-modal-desc {
+  font-size: 13px;
+  color: #999;
+  line-height: 1.65;
+  margin-bottom: 18px;
 }
 
-#ach-detail-link {
+#achievement-modal-img-wrap {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 18px;
+}
+
+#achievement-modal-iframe {
+  width: 100%; height: 100%;
+  border: none;
+  display: block;
+}
+
+#achievement-modal-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#achievement-modal-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -511,25 +396,166 @@ p { font-size: 16px; margin: 0 0 1rem; }
   padding: 8px 16px;
   border-radius: 6px;
   text-decoration: none;
-  background: rgba(167, 139, 250, 0.15);
-  color: #a78bfa;
-  border: 1px solid rgba(167, 139, 250, 0.25);
-  transition: all 0.2s;
-  margin-bottom: 1rem;
+  background: rgba(255,215,0,0.1);
+  color: #ffd700;
+  border: 1px solid rgba(255,215,0,0.2);
+  transition: background 0.2s, border-color 0.2s;
 }
-#ach-detail-link:hover { background: rgba(167, 139, 250, 0.3); }
+#achievement-modal-link:hover {
+  background: rgba(255,215,0,0.2);
+  border-color: rgba(255,215,0,0.4);
+}
 
-#ach-detail-delete {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid rgba(239, 68, 68, 0.25);
+#achievement-modal-delete {
+  margin-left: auto;
+  background: none;
+  border: 1px solid rgba(239,68,68,0.25);
+  color: rgba(239,68,68,0.6);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 7px 14px;
   border-radius: 6px;
-  background: rgba(239, 68, 68, 0.08);
-  color: #ef4444;
-  font-family: var(--font-sans);
-  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
 }
-#ach-detail-delete:hover { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); }
+#achievement-modal-delete:hover {
+  background: rgba(239,68,68,0.1);
+  color: #ef4444;
+  border-color: rgba(239,68,68,0.5);
+}
+
+/* ─── ADD STAR FORM ──────────────────────────────────────────────── */
+
+#add-star-form {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 10, 0.82);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#add-star-form.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#add-star-form-inner {
+  position: relative;
+  width: 440px;
+  max-width: 92vw;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 32px 28px 24px;
+  transform: translateY(18px);
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+#add-star-form.active #add-star-form-inner {
+  transform: translateY(0);
+}
+
+#add-star-form-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: none; border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 24px; cursor: pointer;
+  line-height: 1; transition: color 0.2s;
+}
+#add-star-form-close:hover { color: #fff; }
+
+#add-star-form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: #ffd700;
+  margin-bottom: 20px;
+}
+
+#add-star-form-inner input[type="text"],
+#add-star-form-inner textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 7px;
+  color: #e0e0e0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  display: block;
+}
+#add-star-form-inner input[type="text"]:focus,
+#add-star-form-inner textarea:focus {
+  border-color: rgba(255,215,0,0.4);
+  background: rgba(255,255,255,0.09);
+}
+#add-star-form-inner textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+#add-star-form-inner input::placeholder,
+#add-star-form-inner textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+#star-type-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+#star-type-row label { cursor: pointer; display: flex; align-items: center; gap: 6px; }
+#star-type-row input[type="radio"] { accent-color: #ffd700; cursor: pointer; }
+
+#add-star-form-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+#star-submit-btn {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 9px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 16px rgba(255,255,255,0.06);
+}
+#star-submit-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 24px rgba(255,255,255,0.12);
+}
+
+#star-cancel-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.35);
+  padding: 9px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+#star-cancel-btn:hover {
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.6);
+}
+
